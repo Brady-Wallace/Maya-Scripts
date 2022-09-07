@@ -1,0 +1,80 @@
+//variables
+string $stem_name = "Base";
+string $face_name = "Face";
+string $eye_name = "Eye";
+string $nose_name = "Nose";
+string $smile_name = "Smile";
+int $size = 1;
+
+//Create the stem of the flower
+polyCylinder -r $size -h 2 -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+rename "pCylinder1" $stem_name;
+move -rpr -y 1 ;
+select -r Base.vtx[20:39] Base.vtx[41] ;
+move -r 0 0.70468 -0.608092 ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.192092896e-07 -pvy 2.704679966 -pvz -0.6080922186 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Base.f[40:59];
+move -r 0 2.081164 0 ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.192092896e-07 -pvy 6.90794754 -pvz -0.6080922186 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 Base.f[40:59];
+move -r 0 1.867945 0 ;
+move -r 0 0 1.5222 ;
+rotate -r -p -1.19209e-07cm 6.653789cm 0.914108cm -os -fo 88.698149 0 0 ;
+polySoftEdge -a 180 -ch 1 Base.e[80:81] Base.e[83] Base.e[85] Base.e[87] Base.e[89] Base.e[91] Base.e[93] Base.e[95] Base.e[97] Base.e[99] Base.e[101] Base.e[103] Base.e[105] Base.e[107] Base.e[109] Base.e[111] Base.e[113] Base.e[115] Base.e[117];
+polySoftEdge -a 180 -ch 1 Base.e[120:121] Base.e[125] Base.e[128] Base.e[131] Base.e[134] Base.e[137] Base.e[140] Base.e[143] Base.e[146] Base.e[149] Base.e[152] Base.e[155] Base.e[158] Base.e[161] Base.e[164] Base.e[167] Base.e[170] Base.e[173] Base.e[176];
+
+
+//Create the head of the flower
+polySphere -r ($size * 2) -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+rename "pSphere1" $face_name;
+scale -r 1 1 0.355383 ;
+move -r 0 7.27304 1.035125 ;
+
+//Create the eyes of the flower
+polySphere -r ($size * 0.5) -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+rename "pSphere1" $eye_name;
+scale -r 0.401019 1 0.26857 ;
+move -r -0.640236  7.723847 1.726544 ;
+polySphere -r ($size * 0.5) -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+rename "pSphere1" $eye_name;
+scale -r 0.401019 1 0.26857 ;
+move -r 0.640236  7.723847 1.726544 ;
+
+//Create the nose of the flower
+polySphere -r ($size * 0.25) -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+rename "pSphere1" $nose_name;
+move -r 0  7.0 1.621525 ;
+
+//Create the smile of the flower
+polySphere -r ($size * 0.25) -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+rename "pSphere1" $smile_name;
+move -r 0  6.25 1.621525 ;
+scale -r 2.464359 0.422297 0.244791 ;
+polySphere -r ($size * 0.25) -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+rename "pSphere1" $smile_name;
+move -r -0.55  6.30 1.621525 ;
+scale -r 0.403053 1 0.194712 ;
+rotate -r -os -fo 0 0 -23.89168 ;
+polySphere -r ($size * 0.25) -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+rename "pSphere1" $smile_name;
+move -r 0.55  6.30 1.621525 ;
+scale -r 0.403053 1 0.194712 ;
+rotate -r -os -fo 0 0 23.89168 ;
+
+//Create the pedals of the flower\
+proc Pedals(){
+float $move_y = 7.5;
+int $rotate_z = 0;
+int $size = 1;
+int $i = 1;
+string $pedal_name = "Pedal";
+while ($i < 5){
+polySphere -r ($size * 0.25) -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+rename "pSphere1" $pedal_name;
+move -r 0  $move_y 1 ;
+scale -r 10 15 1 ;
+rotate -r -os -fo 0 0 $rotate_z ;
+$rotate_z = $rotate_z + 50;
+$i++;
+}
+}
+
+Pedals();
