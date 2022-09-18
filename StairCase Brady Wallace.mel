@@ -1,0 +1,20 @@
+proc GenerateStaircase(int $numStairs, float $stairLen, float $stairWidth, float $stairHeight, float $stairPivot, int $stepHeight, int $stepRot)
+{
+    for ($i = 1; $i < $numStairs; $i++)
+    {
+        polyCube -w 1 -h 1 -d 1 -sx 1 -sy 1 -sz 1 -ax 0 1 0 -cuv 4 -ch 1;
+        scale -r $stairWidth $stairHeight $stairLen ;
+        xform -rp 0 0 $stairPivot;
+        int $height = $height + $stepHeight;
+        move -r 0 $height 0 ;
+        int $rotate = $rotate + $stepRot;
+        rotate -r -os -fo 0 $rotate 0 ;
+    }
+    select -r pCube4 pCube17 pCube3 pCube9 pCube18 pCube11 pCube10 pCube19 pCube1 pCube15 pCube12 pCube16 pCube5 pCube8 pCube7 pCube6 pCube13 pCube14 pCube2 ;
+    doGroup 0 1 1;
+    move -r 0 (-1 * $stepHeight) 0 ;
+
+}
+
+GenerateStaircase(20, 8, 3, .5, -10, 4, 25);
+
