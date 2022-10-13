@@ -1,0 +1,71 @@
+global proc ButtonPress()
+{
+    string $startFieldX = `optionVar -q "StartRangeX"`;
+    string $endFieldX = `optionVar -q "EndRangeX"`;
+    string $startFieldY = `optionVar -q "StartRangeY"`;
+    string $endFieldY = `optionVar -q "EndRangeY"`;
+    string $startFieldZ = `optionVar -q "StartRangeZ"`;
+    string $endFieldZ = `optionVar -q "EndRangeZ"`;
+    string $duplicatesField = `optionVar -q "Duplicates"`;
+    
+    int $startX = `intField -q -value $startFieldX`;
+    int $endX = `intField -q -value $endFieldX`;
+    int $startY = `intField -q -value $startFieldY`;
+    int $endY = `intField -q -value $endFieldY`;
+    int $startZ = `intField -q -value $startFieldZ`;
+    int $endZ = `intField -q -value $endFieldZ`;
+    int $duplicate = `intField -q -value $duplicatesField`;
+    int $i = 0;
+
+    string $selection[] = `ls -selection`;
+    string $object;
+
+    for($object in $selection)
+    {
+        while($i < $duplicate)
+        {
+            string $duplicateName = $object + (string)$i;
+            float $randomX = rand ($startX, $endX);
+            float $randomY = rand ($startY, $endY);
+            float $randomZ = rand ($startZ, $endZ);
+            duplicate -name $object;
+            move -r $randomX $randomY $randomZ ;
+            $i++;
+        }
+    }
+}
+
+global proc RandomizerUi()
+{
+    string $win = "Randomizer";
+
+
+    if (`window -exists $win`)
+        deleteUI $win;
+
+    $win = `window -title "Calculator"  
+            -widthHeight 300 400
+            -resizeToFitChildren 1
+            $win`;
+    
+    string $col = `columnLayout -parent $win -adjustableColumn 1`;
+    textField -parent $col -editable 0 -text "Start Range X:";
+    optionVar -sv "StartRangeX" `intField`;
+    textField -parent $col -editable 0 -text "End Range X:";
+    optionVar -sv "EndRangeX" `intField`;
+    textField -parent $col -editable 0 -text "Start Range Y:";
+    optionVar -sv "StartRangeY" `intField`;
+    textField -parent $col -editable 0 -text "End Range Y:";
+    optionVar -sv "EndRangeY" `intField`;
+    textField -parent $col -editable 0 -text "Start Range Z:";
+    optionVar -sv "StartRangeZ" `intField`;
+    textField -parent $col -editable 0 -text "End Range Z:";
+    optionVar -sv "EndRangeZ" `intField`;
+    textField -parent $col -editable 0 -text "Amount:";
+    optionVar -sv "Duplicates" `intField`;
+    button -parent $col -label "Go" -command "ButtonPress";
+    showWindow $win;
+
+    
+}
+RandomizerUi();
